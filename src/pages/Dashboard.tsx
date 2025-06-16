@@ -2,7 +2,9 @@
 import React from 'react';
 import { StatsCard } from '@/components/Dashboard/StatsCard';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Users, Calendar, DollarSign, TrendingUp } from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Users, Calendar, DollarSign, TrendingUp, Clock, FileText } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { mockStudents, mockClasses } from '@/data/mockData';
 

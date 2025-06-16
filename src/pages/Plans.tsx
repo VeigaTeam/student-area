@@ -1,5 +1,6 @@
 
 import React from 'react';
+import { Button } from '@/components/ui/button';
 import { PlanCard } from '@/components/Plans/PlanCard';
 import { mockPlans } from '@/data/mockData';
 import { useAuth } from '@/contexts/AuthContext';
