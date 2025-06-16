@@ -10,16 +10,16 @@ import { toast } from '@/hooks/use-toast';
 export const LoginForm: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const { login, isLoading } = useAuth();
+  const { signIn, loading } = useAuth();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    const success = await login(email, password);
-    if (!success) {
+    const { error } = await signIn(email, password);
+    if (error) {
       toast({
         title: "Erro no login",
-        description: "Email ou senha incorretos.",
+        description: error.message || "Email ou senha incorretos.",
         variant: "destructive",
       });
     }
@@ -74,9 +74,9 @@ export const LoginForm: React.FC = () => {
               <Button
                 type="submit"
                 className="w-full bg-gradient-fitness hover:bg-emerald-600 text-white"
-                disabled={isLoading}
+                disabled={loading}
               >
-                {isLoading ? 'Entrando...' : 'Entrar'}
+                {loading ? 'Entrando...' : 'Entrar'}
               </Button>
             </form>
 

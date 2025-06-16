@@ -1,9 +1,8 @@
-
 import React from 'react';
 import { StatsCard } from '@/components/Dashboard/StatsCard';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Avatar, AvatarFallback, AvatarImage } from 'lucide-react';
 import { Users, Calendar, DollarSign, TrendingUp, Clock, FileText } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { mockStudents, mockClasses } from '@/data/mockData';
@@ -19,12 +18,15 @@ const Dashboard: React.FC = () => {
     .filter(s => s.status === 'active')
     .reduce((sum, s) => sum + s.plan.monthlyPrice, 0);
 
-  if (user?.role === 'student') {
+  const userName = user?.user_metadata?.full_name || user?.email?.split('@')[0] || 'Usuário';
+  const userRole = user?.email === 'admin@veigateam.com' ? 'admin' : 'student';
+
+  if (userRole === 'student') {
     return (
       <div className="space-y-6">
         <div>
           <h1 className="text-2xl font-bold text-gray-900">
-            Bem-vindo, {user.name}! 💪
+            Bem-vindo, {userName}! 💪
           </h1>
           <p className="mt-1 text-sm text-gray-600">
             Acompanhe suas atividades e progresso na academia.

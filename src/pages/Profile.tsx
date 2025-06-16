@@ -14,8 +14,12 @@ import { toast } from '@/hooks/use-toast';
 const Profile: React.FC = () => {
   const { user } = useAuth();
   const [isEditing, setIsEditing] = useState(false);
+  
+  const userName = user?.user_metadata?.full_name || user?.email?.split('@')[0] || 'Usuário';
+  const userAvatar = user?.user_metadata?.avatar_url;
+  
   const [profileData, setProfileData] = useState({
-    name: user?.name || '',
+    name: userName,
     email: user?.email || '',
     phone: '(11) 99999-9999',
     birthDate: '1990-01-01',
@@ -53,6 +57,8 @@ const Profile: React.FC = () => {
     status: 'active'
   };
 
+  const userRole = user?.email === 'admin@veigateam.com' ? 'admin' : 'student';
+
   return (
     <div className="space-y-6">
       <div>
@@ -69,9 +75,9 @@ const Profile: React.FC = () => {
             <CardContent className="p-6 text-center">
               <div className="relative inline-block">
                 <Avatar className="h-24 w-24 mx-auto">
-                  <AvatarImage src={user?.avatar} alt={user?.name} />
+                  <AvatarImage src={userAvatar} alt={userName} />
                   <AvatarFallback className="text-lg">
-                    {user?.name?.split(' ').map(n => n[0]).join('').toUpperCase()}
+                    {userName.split(' ').map(n => n[0]).join('').toUpperCase()}
                   </AvatarFallback>
                 </Avatar>
                 <Button
@@ -83,14 +89,14 @@ const Profile: React.FC = () => {
                 </Button>
               </div>
               
-              <h3 className="mt-4 text-lg font-semibold">{user?.name}</h3>
+              <h3 className="mt-4 text-lg font-semibold">{userName}</h3>
               <p className="text-gray-600">{user?.email}</p>
               
               <div className="mt-4 space-y-2">
                 <Badge className="bg-emerald-100 text-emerald-800">
-                  {user?.role === 'admin' ? 'Administrador' : 'Aluno'}
+                  {userRole === 'admin' ? 'Administrador' : 'Aluno'}
                 </Badge>
-                {user?.role === 'student' && (
+                {userRole === 'student' && (
                   <Badge className="bg-blue-100 text-blue-800">
                     Plano {currentPlan.name}
                   </Badge>
@@ -99,7 +105,7 @@ const Profile: React.FC = () => {
             </CardContent>
           </Card>
 
-          {user?.role === 'student' && (
+          {userRole === 'student' && (
             <Card className="mt-4">
               <CardHeader>
                 <CardTitle className="text-lg">Plano Atual</CardTitle>
@@ -133,7 +139,7 @@ const Profile: React.FC = () => {
           <Tabs defaultValue="personal" className="space-y-4">
             <TabsList>
               <TabsTrigger value="personal">Informações Pessoais</TabsTrigger>
-              {user?.role === 'student' && (
+              {userRole === 'student' && (
                 <>
                   <TabsTrigger value="history">Histórico de Aulas</TabsTrigger>
                   <TabsTrigger value="plan">Gerenciar Plano</TabsTrigger>
@@ -237,7 +243,7 @@ const Profile: React.FC = () => {
               </Card>
             </TabsContent>
 
-            {user?.role === 'student' && (
+            {userRole === 'student' && (
               <>
                 <TabsContent value="history">
                   <Card>
