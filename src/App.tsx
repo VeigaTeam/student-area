@@ -1,11 +1,9 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { AuthProvider, useAuth } from "@/contexts/AuthContext";
-import { LoginForm } from "@/components/Auth/LoginForm";
 import { Layout } from "@/components/Layout/Layout";
 import Dashboard from "./pages/Dashboard";
 import Students from "./pages/Students";
@@ -14,14 +12,15 @@ import Schedule from "./pages/Schedule";
 import Financial from "./pages/Financial";
 import Settings from "./pages/Settings";
 import Profile from "./pages/Profile";
+import Auth from "./pages/Auth";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
 
 const AppContent = () => {
-  const { user, isLoading } = useAuth();
+  const { user, loading } = useAuth();
 
-  if (isLoading) {
+  if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-emerald-50">
         <div className="text-center">
@@ -35,28 +34,36 @@ const AppContent = () => {
   }
 
   if (!user) {
-    return <LoginForm />;
+    return (
+      <Routes>
+        <Route path="/auth" element={<Auth />} />
+        <Route path="*" element={<Navigate to="/auth" replace />} />
+      </Routes>
+    );
   }
+
+  // Check if user is admin (you can modify this logic based on your needs)
+  const isAdmin = user.email === 'admin@veigateam.com' || user.user_metadata?.role === 'admin';
 
   return (
     <Layout>
       <Routes>
         <Route path="/" element={<Dashboard />} />
-        {user.role === 'admin' && (
+        {isAdmin ? (
           <>
             <Route path="/students" element={<Students />} />
             <Route path="/schedule" element={<Schedule />} />
             <Route path="/financial" element={<Financial />} />
             <Route path="/settings" element={<Settings />} />
           </>
-        )}
-        {user.role === 'student' && (
+        ) : (
           <>
             <Route path="/my-schedule" element={<Schedule />} />
             <Route path="/profile" element={<Profile />} />
           </>
         )}
         <Route path="/plans" element={<Plans />} />
+        <Route path="/auth" element={<Navigate to="/" replace />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Layout>

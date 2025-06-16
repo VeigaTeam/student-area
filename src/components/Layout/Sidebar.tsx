@@ -33,7 +33,9 @@ export const Sidebar: React.FC = () => {
   const location = useLocation();
   const { user } = useAuth();
   
-  const navItems = user?.role === 'admin' ? adminNavItems : studentNavItems;
+  // Check if user is admin
+  const isAdmin = user?.email === 'admin@veigateam.com' || user?.user_metadata?.role === 'admin';
+  const navItems = isAdmin ? adminNavItems : studentNavItems;
 
   return (
     <div className="hidden md:flex md:w-64 md:flex-col">
