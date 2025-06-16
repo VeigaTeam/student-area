@@ -1,128 +1,113 @@
-
-import { Plan, Student, ClassSchedule } from '@/types';
+import { Plan, Student } from '@/types';
+import { mockClasses } from './mockClasses';
 
 export const mockPlans: Plan[] = [
   {
     id: '1',
-    name: 'Basic',
-    description: 'Ideal para iniciantes',
-    monthlyPrice: 89,
+    name: 'Básico',
+    description: 'Ideal para quem está começando',
+    monthlyPrice: 79.90,
     weeklyClasses: 2,
-    modalities: ['Funcional'],
-    features: [
-      'Acesso à área de musculação',
-      '2 aulas funcionais por semana',
-      'Avaliação física inicial',
-      'Suporte básico'
-    ]
+    modalities: ['Musculação', 'Cardio'],
+    features: ['Acesso à área de musculação', '2 aulas por semana'],
   },
   {
     id: '2',
     name: 'Premium',
-    description: 'Para quem quer mais variedade',
-    monthlyPrice: 149,
-    weeklyClasses: 4,
-    modalities: ['Funcional', 'Muay Thai'],
+    description: 'Para quem busca alta performance',
+    monthlyPrice: 149.90,
+    weeklyClasses: 5,
+    modalities: ['Musculação', 'Cardio', 'Funcional', 'Yoga'],
     popular: true,
     features: [
-      'Acesso à área de musculação',
-      '4 aulas por semana',
-      'Funcional + Muay Thai',
-      'Avaliação física mensal',
-      'Plano nutricional básico',
-      'Suporte prioritário'
-    ]
+      'Acesso ilimitado à academia',
+      'Acesso a todas as modalidades',
+      'Acompanhamento personalizado',
+    ],
   },
   {
     id: '3',
-    name: 'Elite',
-    description: 'Acesso completo',
-    monthlyPrice: 199,
-    weeklyClasses: 0, // Ilimitado
-    modalities: ['Funcional', 'Muay Thai', 'Yoga', 'Crossfit'],
-    features: [
-      'Acesso completo a todas as modalidades',
-      'Aulas ilimitadas',
-      'Personal trainer 1x por semana',
-      'Avaliação física quinzenal',
-      'Plano nutricional completo',
-      'Acesso a eventos exclusivos',
-      'Suporte VIP'
-    ]
-  }
+    name: 'Intermediário',
+    description: 'Equilíbrio entre custo e benefício',
+    monthlyPrice: 119.90,
+    weeklyClasses: 3,
+    modalities: ['Musculação', 'Cardio', 'Funcional'],
+    features: ['Acesso à área de musculação', 'Acesso a aulas de funcional', '3 aulas por semana'],
+  },
 ];
 
 export const mockStudents: Student[] = [
   {
     id: '1',
     name: 'João Silva',
-    email: 'joao@email.com',
-    phone: '(11) 99999-9999',
-    birthDate: new Date('1990-05-15'),
+    email: 'joao.silva@example.com',
+    phone: '(11) 99999-1111',
+    birthDate: new Date('1995-05-20'),
+    plan: mockPlans[0],
+    status: 'active',
+    joinDate: new Date('2023-01-15'),
+    avatar: 'https://utfs.io/f/29a53394-8479-4a16-a949-3410aa118ff4-i3q9nj.png',
+    address: 'Rua A, 123 - Centro',
+    emergencyContact: '(11) 99999-2222',
+    medicalNotes: 'Nenhuma restrição',
+  },
+  {
+    id: '2',
+    name: 'Maria Souza',
+    email: 'maria.souza@example.com',
+    phone: '(11) 99999-3333',
+    birthDate: new Date('1998-10-02'),
     plan: mockPlans[1],
     status: 'active',
-    joinDate: new Date('2024-01-15'),
-    avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80'
-  },
-  {
-    id: '2',
-    name: 'Maria Santos',
-    email: 'maria@email.com',
-    phone: '(11) 88888-8888',
-    birthDate: new Date('1985-08-22'),
-    plan: mockPlans[2],
-    status: 'active',
-    joinDate: new Date('2024-02-01'),
-    avatar: 'https://images.unsplash.com/photo-1494790108755-2616b612b786?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80'
+    joinDate: new Date('2023-03-10'),
+    avatar: 'https://utfs.io/f/29a53394-8479-4a16-a949-3410aa118ff4-i3q9nj.png',
+    address: 'Rua B, 456 - Jardim',
+    emergencyContact: '(11) 99999-4444',
+    medicalNotes: 'Alérgica a lactose',
   },
   {
     id: '3',
-    name: 'Pedro Oliveira',
-    email: 'pedro@email.com',
-    phone: '(11) 77777-7777',
-    birthDate: new Date('1992-12-10'),
+    name: 'Carlos Oliveira',
+    email: 'carlos.oliveira@example.com',
+    phone: '(11) 99999-5555',
+    birthDate: new Date('1990-12-15'),
+    plan: mockPlans[2],
+    status: 'inactive',
+    joinDate: new Date('2022-11-20'),
+    avatar: 'https://utfs.io/f/29a53394-8479-4a16-a949-3410aa118ff4-i3q9nj.png',
+    address: 'Rua C, 789 - Vila',
+    emergencyContact: '(11) 99999-6666',
+    medicalNotes: 'Problemas de pressão alta',
+  },
+  {
+    id: '4',
+    name: 'Ana Pereira',
+    email: 'ana.pereira@example.com',
+    phone: '(11) 99999-7777',
+    birthDate: new Date('1993-07-01'),
     plan: mockPlans[0],
+    status: 'active',
+    joinDate: new Date('2023-05-01'),
+    avatar: 'https://utfs.io/f/29a53394-8479-4a16-a949-3410aa118ff4-i3q9nj.png',
+    address: 'Rua D, 101 - Lapa',
+    emergencyContact: '(11) 99999-8888',
+    medicalNotes: 'Nenhuma restrição',
+  },
+  {
+    id: '5',
+    name: 'Lucas Santos',
+    email: 'lucas.santos@example.com',
+    phone: '(11) 99999-9999',
+    birthDate: new Date('2000-03-10'),
+    plan: mockPlans[1],
     status: 'overdue',
-    joinDate: new Date('2023-11-20'),
-    avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80'
-  }
+    joinDate: new Date('2022-09-01'),
+    avatar: 'https://utfs.io/f/29a53394-8479-4a16-a949-3410aa118ff4-i3q9nj.png',
+    address: 'Rua E, 222 - Pinheiros',
+    emergencyContact: '(11) 99999-0000',
+    medicalNotes: 'Lesão no joelho',
+  },
 ];
 
-export const mockClasses: ClassSchedule[] = [
-  {
-    id: '1',
-    title: 'Funcional Matinal',
-    modality: 'Funcional',
-    instructor: 'Carlos Fitness',
-    date: new Date('2024-12-17'),
-    startTime: '07:00',
-    endTime: '08:00',
-    maxStudents: 15,
-    enrolledStudents: ['1', '2'],
-    location: 'Sala 1'
-  },
-  {
-    id: '2',
-    title: 'Muay Thai Intermediário',
-    modality: 'Muay Thai',
-    instructor: 'Ana Fighter',
-    date: new Date('2024-12-17'),
-    startTime: '19:00',
-    endTime: '20:00',
-    maxStudents: 12,
-    enrolledStudents: ['2'],
-    location: 'Sala 2'
-  },
-  {
-    id: '3',
-    title: 'Yoga Relaxante',
-    modality: 'Yoga',
-    instructor: 'Lucia Zen',
-    date: new Date('2024-12-18'),
-    startTime: '18:00',
-    endTime: '19:00',
-    maxStudents: 20,
-    enrolledStudents: [],
-    location: 'Sala 3'
-  }
-];
+// Re-export classes from separate file
+export { mockClasses };

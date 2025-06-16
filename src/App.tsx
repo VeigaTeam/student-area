@@ -10,6 +10,10 @@ import { Layout } from "@/components/Layout/Layout";
 import Dashboard from "./pages/Dashboard";
 import Students from "./pages/Students";
 import Plans from "./pages/Plans";
+import Schedule from "./pages/Schedule";
+import Financial from "./pages/Financial";
+import Settings from "./pages/Settings";
+import Profile from "./pages/Profile";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -41,15 +45,15 @@ const AppContent = () => {
         {user.role === 'admin' && (
           <>
             <Route path="/students" element={<Students />} />
-            <Route path="/schedule" element={<div>Agendamentos (em desenvolvimento)</div>} />
-            <Route path="/financial" element={<div>Financeiro (em desenvolvimento)</div>} />
-            <Route path="/settings" element={<div>Configurações (em desenvolvimento)</div>} />
+            <Route path="/schedule" element={<Schedule />} />
+            <Route path="/financial" element={<Financial />} />
+            <Route path="/settings" element={<Settings />} />
           </>
         )}
         {user.role === 'student' && (
           <>
-            <Route path="/my-schedule" element={<div>Minhas Aulas (em desenvolvimento)</div>} />
-            <Route path="/profile" element={<div>Perfil (em desenvolvimento)</div>} />
+            <Route path="/my-schedule" element={<Schedule />} />
+            <Route path="/profile" element={<Profile />} />
           </>
         )}
         <Route path="/plans" element={<Plans />} />
