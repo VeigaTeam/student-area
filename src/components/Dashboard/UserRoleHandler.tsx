@@ -15,12 +15,16 @@ export const UserRoleHandler: React.FC<UserRoleHandlerProps> = ({ userName }) =>
 
   if (isLoading) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
+      <div className="flex items-center justify-center min-h-screen bg-background">
         <div className="text-center">
           <div className="w-16 h-16 bg-gradient-fitness rounded-xl flex items-center justify-center mb-4 mx-auto animate-pulse">
-            <span className="text-white font-bold text-2xl">VT</span>
+            <img 
+              src="/api/placeholder/64/64" 
+              alt="VeigaTeam Logo" 
+              className="w-12 h-12 object-contain"
+            />
           </div>
-          <p className="text-gray-600">Carregando perfil...</p>
+          <p className="text-muted-foreground">Carregando perfil...</p>
         </div>
       </div>
     );

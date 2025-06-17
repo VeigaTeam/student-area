@@ -24,12 +24,16 @@ const AppRoutes = () => {
 
   if (profileLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-emerald-50">
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 via-black to-red-900">
         <div className="text-center">
-          <div className="w-16 h-16 bg-gradient-fitness rounded-xl flex items-center justify-center mb-4 mx-auto animate-pulse">
-            <span className="text-white font-bold text-2xl">VT</span>
+          <div className="w-20 h-20 bg-dark-card rounded-xl flex items-center justify-center mb-4 mx-auto animate-pulse p-2">
+            <img 
+              src="/api/placeholder/80/80" 
+              alt="VeigaTeam Logo" 
+              className="w-16 h-16 object-contain"
+            />
           </div>
-          <p className="text-gray-600">Carregando perfil...</p>
+          <p className="text-gray-300">Carregando perfil...</p>
         </div>
       </div>
     );
@@ -67,12 +71,16 @@ const AppContent = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-emerald-50">
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 via-black to-red-900">
         <div className="text-center">
-          <div className="w-16 h-16 bg-gradient-fitness rounded-xl flex items-center justify-center mb-4 mx-auto animate-pulse">
-            <span className="text-white font-bold text-2xl">VT</span>
+          <div className="w-20 h-20 bg-dark-card rounded-xl flex items-center justify-center mb-4 mx-auto animate-pulse p-2">
+            <img 
+              src="/api/placeholder/80/80" 
+              alt="VeigaTeam Logo" 
+              className="w-16 h-16 object-contain"
+            />
           </div>
-          <p className="text-gray-600">Carregando...</p>
+          <p className="text-gray-300">Carregando...</p>
         </div>
       </div>
     );
@@ -93,13 +101,15 @@ const AppContent = () => {
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <AuthProvider>
-          <AppContent />
-        </AuthProvider>
-      </BrowserRouter>
+      <div className="dark">
+        <Toaster />
+        <Sonner />
+        <BrowserRouter>
+          <AuthProvider>
+            <AppContent />
+          </AuthProvider>
+        </BrowserRouter>
+      </div>
     </TooltipProvider>
   </QueryClientProvider>
 );
