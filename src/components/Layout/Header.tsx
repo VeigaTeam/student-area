@@ -3,6 +3,7 @@ import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Search, ChevronDown, User, Settings } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
+import { useProfile } from '@/hooks/useProfile';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -17,6 +18,7 @@ import { toast } from '@/hooks/use-toast';
 
 export const Header: React.FC = () => {
   const { user, signOut } = useAuth();
+  const { data: profile } = useProfile();
 
   const handleLogout = async () => {
     const { error } = await signOut();
@@ -34,8 +36,8 @@ export const Header: React.FC = () => {
     }
   };
 
-  const userName = user?.user_metadata?.full_name || user?.email?.split('@')[0] || 'Usuário';
-  const userRole = user?.email === 'admin@veigateam.com' ? 'admin' : 'student';
+  const userName = profile?.full_name || user?.user_metadata?.full_name || user?.email?.split('@')[0] || 'Usuário';
+  const userRole = profile?.role || 'student';
 
   return (
     <header className="bg-white shadow-sm border-b border-gray-200">
@@ -63,14 +65,16 @@ export const Header: React.FC = () => {
               <DropdownMenuTrigger asChild>
                 <Button variant="ghost" className="flex items-center space-x-2 hover:bg-gray-50">
                   <Avatar className="h-8 w-8">
-                    <AvatarImage src={user?.user_metadata?.avatar_url} alt={userName} />
+                    <AvatarImage src={profile?.avatar_url} alt={userName} />
                     <AvatarFallback>
                       {userName.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2)}
                     </AvatarFallback>
                   </Avatar>
                   <div className="flex flex-col items-start">
                     <span className="text-sm font-medium text-gray-700">{userName}</span>
-                    <span className="text-xs text-gray-500 capitalize">{userRole}</span>
+                    <span className="text-xs text-gray-500 capitalize">
+                      {userRole === 'admin' ? 'Administrador' : 'Aluno'}
+                    </span>
                   </div>
                   <ChevronDown className="h-4 w-4 text-gray-400" />
                 </Button>

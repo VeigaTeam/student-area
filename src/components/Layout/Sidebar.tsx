@@ -11,7 +11,7 @@ import {
   Settings,
   User
 } from 'lucide-react';
-import { useAuth } from '@/contexts/AuthContext';
+import { useProfile } from '@/hooks/useProfile';
 
 const adminNavItems = [
   { href: '/', icon: LayoutDashboard, label: 'Dashboard' },
@@ -31,10 +31,10 @@ const studentNavItems = [
 
 export const Sidebar: React.FC = () => {
   const location = useLocation();
-  const { user } = useAuth();
+  const { data: profile } = useProfile();
   
-  // Check if user is admin
-  const isAdmin = user?.email === 'admin@veigateam.com' || user?.user_metadata?.role === 'admin';
+  // Fallback para compatibilidade durante a transição
+  const isAdmin = profile?.role === 'admin';
   const navItems = isAdmin ? adminNavItems : studentNavItems;
 
   return (
