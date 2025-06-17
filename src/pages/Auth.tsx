@@ -66,30 +66,30 @@ export const Auth: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 via-black to-red-900 px-4">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-emerald-50 to-emerald-100 px-4">
       <div className="max-w-md w-full space-y-8">
         <div className="text-center">
-          <div className="mx-auto h-20 w-20 bg-dark-card rounded-xl flex items-center justify-center mb-6 p-2">
+          <div className="mx-auto h-20 w-20 bg-gradient-fitness rounded-xl flex items-center justify-center mb-6 p-2">
             <img 
               src="/api/placeholder/80/80" 
               alt="VeigaTeam Logo" 
               className="w-16 h-16 object-contain"
             />
           </div>
-          <h2 className="text-3xl font-bold text-white">VeigaTeam</h2>
-          <p className="mt-2 text-sm text-gray-300">Sistema de Gestão de Academia</p>
+          <h2 className="text-3xl font-bold text-gray-900">VeigaTeam</h2>
+          <p className="mt-2 text-sm text-gray-600">Sistema de Gestão de Academia</p>
         </div>
 
-        <Card className="shadow-2xl bg-dark-card border-red-600/20">
+        <Card className="shadow-2xl border-red-600/20">
           <CardHeader>
-            <CardTitle className="text-white">Acesso ao Sistema</CardTitle>
-            <CardDescription className="text-gray-300">
+            <CardTitle className="text-gray-900">Acesso ao Sistema</CardTitle>
+            <CardDescription className="text-gray-600">
               Entre com sua conta ou crie uma nova
             </CardDescription>
           </CardHeader>
           <CardContent>
             <Tabs defaultValue="signin" className="w-full">
-              <TabsList className="grid w-full grid-cols-2 bg-gray-800">
+              <TabsList className="grid w-full grid-cols-2">
                 <TabsTrigger value="signin" className="data-[state=active]:bg-red-600 data-[state=active]:text-white">Entrar</TabsTrigger>
                 <TabsTrigger value="signup" className="data-[state=active]:bg-red-600 data-[state=active]:text-white">Cadastrar</TabsTrigger>
               </TabsList>
@@ -97,7 +97,7 @@ export const Auth: React.FC = () => {
               <TabsContent value="signin">
                 <form onSubmit={handleSignIn} className="space-y-4">
                   <div>
-                    <Label htmlFor="email-signin" className="text-gray-200">Email</Label>
+                    <Label htmlFor="email-signin" className="text-gray-700">Email</Label>
                     <Input
                       id="email-signin"
                       type="email"
@@ -105,12 +105,12 @@ export const Auth: React.FC = () => {
                       onChange={(e) => setEmail(e.target.value)}
                       required
                       placeholder="seu@email.com"
-                      className="bg-gray-800 border-gray-600 text-white placeholder:text-gray-400"
+                      className="border-gray-300 focus:border-red-500 focus:ring-red-500"
                     />
                   </div>
 
                   <div>
-                    <Label htmlFor="password-signin" className="text-gray-200">Senha</Label>
+                    <Label htmlFor="password-signin" className="text-gray-700">Senha</Label>
                     <Input
                       id="password-signin"
                       type="password"
@@ -118,7 +118,7 @@ export const Auth: React.FC = () => {
                       onChange={(e) => setPassword(e.target.value)}
                       required
                       placeholder="••••••••"
-                      className="bg-gray-800 border-gray-600 text-white placeholder:text-gray-400"
+                      className="border-gray-300 focus:border-red-500 focus:ring-red-500"
                     />
                   </div>
 
@@ -131,7 +131,7 @@ export const Auth: React.FC = () => {
                   </Button>
                 </form>
                 
-                <div className="mt-4 p-3 bg-gray-800 rounded-lg text-sm text-gray-300">
+                <div className="mt-4 p-3 bg-gray-100 rounded-lg text-sm text-gray-700">
                   <p className="font-semibold mb-2">Usuários de teste:</p>
                   <p><strong>Admin:</strong> admin@veigateam.com / admin123</p>
                   <p><strong>Aluno 1:</strong> aluno1@teste.com / 123456</p>
@@ -142,7 +142,7 @@ export const Auth: React.FC = () => {
               <TabsContent value="signup">
                 <form onSubmit={handleSignUp} className="space-y-4">
                   <div>
-                    <Label htmlFor="name" className="text-gray-200">Nome Completo</Label>
+                    <Label htmlFor="name" className="text-gray-700">Nome Completo</Label>
                     <Input
                       id="name"
                       type="text"
@@ -150,12 +150,12 @@ export const Auth: React.FC = () => {
                       onChange={(e) => setName(e.target.value)}
                       required
                       placeholder="Seu nome completo"
-                      className="bg-gray-800 border-gray-600 text-white placeholder:text-gray-400"
+                      className="border-gray-300 focus:border-red-500 focus:ring-red-500"
                     />
                   </div>
 
                   <div>
-                    <Label htmlFor="email-signup" className="text-gray-200">Email</Label>
+                    <Label htmlFor="email-signup" className="text-gray-700">Email</Label>
                     <Input
                       id="email-signup"
                       type="email"
@@ -163,12 +163,12 @@ export const Auth: React.FC = () => {
                       onChange={(e) => setEmail(e.target.value)}
                       required
                       placeholder="seu@email.com"
-                      className="bg-gray-800 border-gray-600 text-white placeholder:text-gray-400"
+                      className="border-gray-300 focus:border-red-500 focus:ring-red-500"
                     />
                   </div>
 
                   <div>
-                    <Label htmlFor="password-signup" className="text-gray-200">Senha</Label>
+                    <Label htmlFor="password-signup" className="text-gray-700">Senha</Label>
                     <Input
                       id="password-signup"
                       type="password"
@@ -177,7 +177,7 @@ export const Auth: React.FC = () => {
                       required
                       placeholder="••••••••"
                       minLength={6}
-                      className="bg-gray-800 border-gray-600 text-white placeholder:text-gray-400"
+                      className="border-gray-300 focus:border-red-500 focus:ring-red-500"
                     />
                   </div>
 
