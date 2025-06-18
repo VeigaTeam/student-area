@@ -24,7 +24,7 @@ export const Auth: React.FC = () => {
     e.preventDefault();
     setLoading(true);
 
-    console.log('Tentando fazer login com:', { email, password });
+    console.log('Tentando fazer login com:', { email });
 
     const { error } = await signIn(email, password);
     
@@ -139,13 +139,6 @@ export const Auth: React.FC = () => {
                     {loading ? 'Entrando...' : 'Entrar'}
                   </Button>
                 </form>
-                
-                <div className="mt-4 p-3 bg-gray-100 dark:bg-gray-700 rounded-lg text-sm text-gray-700 dark:text-gray-300">
-                  <p className="font-semibold mb-2">Usuários de teste:</p>
-                  <p><strong>Admin:</strong> admin@veigateam.com / admin123</p>
-                  <p><strong>Aluno 1:</strong> aluno1@teste.com / 123456</p>
-                  <p><strong>Aluno 2:</strong> aluno2@teste.com / 123456</p>
-                </div>
               </TabsContent>
               
               <TabsContent value="signup">

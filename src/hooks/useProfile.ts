@@ -20,7 +20,12 @@ export const useProfile = () => {
   return useQuery({
     queryKey: ['profile', user?.id],
     queryFn: async () => {
-      if (!user) return null;
+      if (!user) {
+        console.log('Usuário não encontrado para carregar perfil');
+        return null;
+      }
+      
+      console.log('Carregando perfil para usuário:', user.id);
       
       const { data, error } = await supabase
         .from('profiles')
@@ -28,10 +33,43 @@ export const useProfile = () => {
         .eq('id', user.id)
         .single();
       
-      if (error) throw error;
+      if (error) {
+        console.error('Erro ao carregar perfil:', error);
+        // Se o perfil não existe, vamos criá-lo
+        if (error.code === 'PGRST116') {
+          console.log('Perfil não encontrado, criando novo perfil...');
+          const newProfile = {
+            id: user.id,
+            full_name: user.user_metadata?.full_name || user.email?.split('@')[0] || 'Usuário',
+            email: user.email || '',
+            role: user.email === 'admin@veigateam.com' ? 'admin' as const : 'student' as const,
+            avatar_url: user.user_metadata?.avatar_url || null,
+            phone: user.user_metadata?.phone || null,
+          };
+
+          const { data: createdProfile, error: createError } = await supabase
+            .from('profiles')
+            .insert(newProfile)
+            .select()
+            .single();
+
+          if (createError) {
+            console.error('Erro ao criar perfil:', createError);
+            throw createError;
+          }
+
+          console.log('Perfil criado com sucesso:', createdProfile);
+          return createdProfile as Profile;
+        }
+        throw error;
+      }
+      
+      console.log('Perfil carregado com sucesso:', data);
       return data as Profile;
     },
     enabled: !!user,
+    retry: 1,
+    staleTime: 1000 * 60 * 5, // 5 minutos
   });
 };
 

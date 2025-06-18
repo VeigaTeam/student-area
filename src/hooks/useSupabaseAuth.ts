@@ -34,6 +34,9 @@ export const useSupabaseAuth = () => {
     // Get initial session
     supabase.auth.getSession().then(({ data: { session }, error }) => {
       console.log('Sessão inicial:', { session: !!session, error });
+      if (error) {
+        console.error('Erro ao obter sessão:', error);
+      }
       setAuthState({
         user: session?.user ?? null,
         session,
@@ -69,19 +72,28 @@ export const useSupabaseAuth = () => {
   const signIn = async (email: string, password: string) => {
     console.log('Tentando fazer login:', { email });
     
-    const { data, error } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
+    try {
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
 
-    console.log('Resultado do login:', { 
-      data: !!data, 
-      error, 
-      user: !!data?.user, 
-      session: !!data?.session 
-    });
-    
-    return { data, error };
+      console.log('Resultado do login:', { 
+        data: !!data, 
+        error, 
+        user: !!data?.user, 
+        session: !!data?.session 
+      });
+      
+      if (error) {
+        console.error('Erro detalhado no login:', error);
+      }
+      
+      return { data, error };
+    } catch (err) {
+      console.error('Erro crítico no login:', err);
+      return { data: null, error: err };
+    }
   };
 
   const signOut = async () => {
