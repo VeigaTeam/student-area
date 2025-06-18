@@ -9,8 +9,48 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      booking_approvals: {
+        Row: {
+          admin_id: string | null
+          booking_id: string | null
+          created_at: string | null
+          id: string
+          notes: string | null
+          status: string
+          updated_at: string | null
+        }
+        Insert: {
+          admin_id?: string | null
+          booking_id?: string | null
+          created_at?: string | null
+          id?: string
+          notes?: string | null
+          status?: string
+          updated_at?: string | null
+        }
+        Update: {
+          admin_id?: string | null
+          booking_id?: string | null
+          created_at?: string | null
+          id?: string
+          notes?: string | null
+          status?: string
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "booking_approvals_booking_id_fkey"
+            columns: ["booking_id"]
+            isOneToOne: false
+            referencedRelation: "bookings"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       bookings: {
         Row: {
+          approval_required: boolean | null
+          approval_status: string | null
           booking_date: string | null
           cancel_reason: string | null
           cancelled_at: string | null
@@ -21,6 +61,8 @@ export type Database = {
           student_id: string | null
         }
         Insert: {
+          approval_required?: boolean | null
+          approval_status?: string | null
           booking_date?: string | null
           cancel_reason?: string | null
           cancelled_at?: string | null
@@ -31,6 +73,8 @@ export type Database = {
           student_id?: string | null
         }
         Update: {
+          approval_required?: boolean | null
+          approval_status?: string | null
           booking_date?: string | null
           cancel_reason?: string | null
           cancelled_at?: string | null
@@ -289,6 +333,42 @@ export type Database = {
         }
         Relationships: []
       }
+      schedule_settings: {
+        Row: {
+          advance_booking_days: number
+          auto_approve_bookings: boolean
+          booking_window_end: string
+          booking_window_start: string
+          cancellation_deadline_hours: number
+          created_at: string | null
+          id: string
+          max_bookings_per_day: number
+          updated_at: string | null
+        }
+        Insert: {
+          advance_booking_days?: number
+          auto_approve_bookings?: boolean
+          booking_window_end?: string
+          booking_window_start?: string
+          cancellation_deadline_hours?: number
+          created_at?: string | null
+          id?: string
+          max_bookings_per_day?: number
+          updated_at?: string | null
+        }
+        Update: {
+          advance_booking_days?: number
+          auto_approve_bookings?: boolean
+          booking_window_end?: string
+          booking_window_start?: string
+          cancellation_deadline_hours?: number
+          created_at?: string | null
+          id?: string
+          max_bookings_per_day?: number
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
       students: {
         Row: {
           address: string | null
@@ -351,12 +431,56 @@ export type Database = {
           },
         ]
       }
+      system_logs: {
+        Row: {
+          action: string
+          created_at: string | null
+          details: Json | null
+          entity_id: string | null
+          entity_type: string
+          id: string
+          ip_address: unknown | null
+          user_agent: string | null
+          user_id: string | null
+        }
+        Insert: {
+          action: string
+          created_at?: string | null
+          details?: Json | null
+          entity_id?: string | null
+          entity_type: string
+          id?: string
+          ip_address?: unknown | null
+          user_agent?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          action?: string
+          created_at?: string | null
+          details?: Json | null
+          entity_id?: string | null
+          entity_type?: string
+          id?: string
+          ip_address?: unknown | null
+          user_agent?: string | null
+          user_id?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      log_action: {
+        Args: {
+          p_action: string
+          p_entity_type: string
+          p_entity_id?: string
+          p_details?: Json
+        }
+        Returns: undefined
+      }
     }
     Enums: {
       [_ in never]: never

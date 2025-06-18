@@ -9,7 +9,10 @@ import {
   DollarSign, 
   FileText, 
   Settings,
-  User
+  User,
+  CalendarCheck,
+  ClipboardList,
+  AlertCircle
 } from 'lucide-react';
 import { useProfile } from '@/hooks/useProfile';
 
@@ -17,8 +20,11 @@ const adminNavItems = [
   { href: '/', icon: LayoutDashboard, label: 'Dashboard' },
   { href: '/students', icon: Users, label: 'Alunos' },
   { href: '/schedule', icon: Calendar, label: 'Agendamentos' },
+  { href: '/schedule-settings', icon: CalendarCheck, label: 'Config. Agendamentos' },
   { href: '/plans', icon: FileText, label: 'Planos' },
+  { href: '/plans-management', icon: ClipboardList, label: 'Gerenciar Planos' },
   { href: '/financial', icon: DollarSign, label: 'Financeiro' },
+  { href: '/system-logs', icon: AlertCircle, label: 'Logs do Sistema' },
   { href: '/settings', icon: Settings, label: 'Configurações' },
 ];
 

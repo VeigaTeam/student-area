@@ -1,110 +1,72 @@
 
-import { Toaster } from "@/components/ui/toaster";
-import { Toaster as Sonner } from "@/components/ui/sonner";
-import { TooltipProvider } from "@/components/ui/tooltip";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import { AuthProvider, useAuth } from "@/contexts/AuthContext";
-import { ThemeProvider } from "@/contexts/ThemeContext";
-import { useProfile } from "@/hooks/useProfile";
-import { Layout } from "@/components/Layout/Layout";
-import Dashboard from "./pages/Dashboard";
-import Students from "./pages/Students";
-import Plans from "./pages/Plans";
-import Schedule from "./pages/Schedule";
-import Financial from "./pages/Financial";
-import Settings from "./pages/Settings";
-import Profile from "./pages/Profile";
-import Auth from "./pages/Auth";
-import NotFound from "./pages/NotFound";
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { AuthProvider } from '@/contexts/AuthContext';
+import { ThemeProvider } from '@/contexts/ThemeContext';
+import { Layout } from '@/components/Layout/Layout';
+import { Toaster } from '@/components/ui/toaster';
 
-const queryClient = new QueryClient();
+// Pages
+import Index from '@/pages/Index';
+import Dashboard from '@/pages/Dashboard';
+import Auth from '@/pages/Auth';
+import Students from '@/pages/Students';
+import Schedule from '@/pages/Schedule';
+import Plans from '@/pages/Plans';
+import Financial from '@/pages/Financial';
+import Settings from '@/pages/Settings';
+import Profile from '@/pages/Profile';
+import NotFound from '@/pages/NotFound';
+import ScheduleSettings from '@/pages/ScheduleSettings';
+import PlansManagement from '@/pages/PlansManagement';
+import SystemLogs from '@/pages/SystemLogs';
 
-const AppRoutes = () => {
-  const { data: profile, isLoading: profileLoading } = useProfile();
+import './App.css';
 
-  if (profileLoading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-red-50 to-red-100 dark:from-gray-900 dark:to-gray-800">
-        <div className="text-center">
-          <div className="w-20 h-20 bg-red-600 rounded-xl flex items-center justify-center mb-4 mx-auto animate-pulse p-2">
-            <span className="text-white font-bold text-xl">VT</span>
-          </div>
-          <p className="text-gray-600 dark:text-gray-300">Carregando perfil...</p>
-        </div>
-      </div>
-    );
-  }
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 1000 * 60 * 5, // 5 minutes
+      retry: 1,
+    },
+  },
+});
 
-  const isAdmin = profile?.role === 'admin';
-
+function App() {
   return (
-    <Layout>
-      <Routes>
-        <Route path="/" element={<Dashboard />} />
-        {isAdmin ? (
-          <>
-            <Route path="/students" element={<Students />} />
-            <Route path="/schedule" element={<Schedule />} />
-            <Route path="/financial" element={<Financial />} />
-            <Route path="/settings" element={<Settings />} />
-          </>
-        ) : (
-          <>
-            <Route path="/my-schedule" element={<Schedule />} />
-            <Route path="/profile" element={<Profile />} />
-          </>
-        )}
-        <Route path="/plans" element={<Plans />} />
-        <Route path="/auth" element={<Navigate to="/" replace />} />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
-    </Layout>
+    <QueryClientProvider client={queryClient}>
+      <ThemeProvider>
+        <AuthProvider>
+          <Router>
+            <div className="min-h-screen bg-background">
+              <Routes>
+                <Route path="/auth" element={<Auth />} />
+                <Route path="/*" element={
+                  <Layout>
+                    <Routes>
+                      <Route path="/" element={<Dashboard />} />
+                      <Route path="/students" element={<Students />} />
+                      <Route path="/schedule" element={<Schedule />} />
+                      <Route path="/schedule-settings" element={<ScheduleSettings />} />
+                      <Route path="/plans" element={<Plans />} />
+                      <Route path="/plans-management" element={<PlansManagement />} />
+                      <Route path="/financial" element={<Financial />} />
+                      <Route path="/settings" element={<Settings />} />
+                      <Route path="/system-logs" element={<SystemLogs />} />
+                      <Route path="/profile" element={<Profile />} />
+                      <Route path="*" element={<NotFound />} />
+                    </Routes>
+                  </Layout>
+                } />
+              </Routes>
+            </div>
+            <Toaster />
+          </Router>
+        </AuthProvider>
+      </ThemeProvider>
+    </QueryClientProvider>
   );
-};
-
-const AppContent = () => {
-  const { user, loading } = useAuth();
-
-  if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-red-50 to-red-100 dark:from-gray-900 dark:to-gray-800">
-        <div className="text-center">
-          <div className="w-20 h-20 bg-red-600 rounded-xl flex items-center justify-center mb-4 mx-auto animate-pulse p-2">
-            <span className="text-white font-bold text-xl">VT</span>
-          </div>
-          <p className="text-gray-600 dark:text-gray-300">Carregando...</p>
-        </div>
-      </div>
-    );
-  }
-
-  if (!user) {
-    return (
-      <Routes>
-        <Route path="/auth" element={<Auth />} />
-        <Route path="*" element={<Navigate to="/auth" replace />} />
-      </Routes>
-    );
-  }
-
-  return <AppRoutes />;
-};
-
-const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <ThemeProvider>
-      <TooltipProvider>
-        <Toaster />
-        <Sonner />
-        <BrowserRouter>
-          <AuthProvider>
-            <AppContent />
-          </AuthProvider>
-        </BrowserRouter>
-      </TooltipProvider>
-    </ThemeProvider>
-  </QueryClientProvider>
-);
+}
 
 export default App;
