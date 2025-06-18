@@ -5,6 +5,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { AuthProvider, useAuth } from "@/contexts/AuthContext";
+import { ThemeProvider } from "@/contexts/ThemeContext";
 import { useProfile } from "@/hooks/useProfile";
 import { Layout } from "@/components/Layout/Layout";
 import Dashboard from "./pages/Dashboard";
@@ -24,16 +25,12 @@ const AppRoutes = () => {
 
   if (profileLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-emerald-50 to-emerald-100">
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-red-50 to-red-100 dark:from-gray-900 dark:to-gray-800">
         <div className="text-center">
-          <div className="w-20 h-20 bg-gradient-fitness rounded-xl flex items-center justify-center mb-4 mx-auto animate-pulse p-2">
-            <img 
-              src="/api/placeholder/80/80" 
-              alt="VeigaTeam Logo" 
-              className="w-16 h-16 object-contain"
-            />
+          <div className="w-20 h-20 bg-red-600 rounded-xl flex items-center justify-center mb-4 mx-auto animate-pulse p-2">
+            <span className="text-white font-bold text-xl">VT</span>
           </div>
-          <p className="text-gray-600">Carregando perfil...</p>
+          <p className="text-gray-600 dark:text-gray-300">Carregando perfil...</p>
         </div>
       </div>
     );
@@ -71,16 +68,12 @@ const AppContent = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-emerald-50 to-emerald-100">
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-red-50 to-red-100 dark:from-gray-900 dark:to-gray-800">
         <div className="text-center">
-          <div className="w-20 h-20 bg-gradient-fitness rounded-xl flex items-center justify-center mb-4 mx-auto animate-pulse p-2">
-            <img 
-              src="/api/placeholder/80/80" 
-              alt="VeigaTeam Logo" 
-              className="w-16 h-16 object-contain"
-            />
+          <div className="w-20 h-20 bg-red-600 rounded-xl flex items-center justify-center mb-4 mx-auto animate-pulse p-2">
+            <span className="text-white font-bold text-xl">VT</span>
           </div>
-          <p className="text-gray-600">Carregando...</p>
+          <p className="text-gray-600 dark:text-gray-300">Carregando...</p>
         </div>
       </div>
     );
@@ -100,15 +93,17 @@ const AppContent = () => {
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <AuthProvider>
-          <AppContent />
-        </AuthProvider>
-      </BrowserRouter>
-    </TooltipProvider>
+    <ThemeProvider>
+      <TooltipProvider>
+        <Toaster />
+        <Sonner />
+        <BrowserRouter>
+          <AuthProvider>
+            <AppContent />
+          </AuthProvider>
+        </BrowserRouter>
+      </TooltipProvider>
+    </ThemeProvider>
   </QueryClientProvider>
 );
 

@@ -33,19 +33,18 @@ export const Sidebar: React.FC = () => {
   const location = useLocation();
   const { data: profile } = useProfile();
   
-  // Fallback para compatibilidade durante a transição
   const isAdmin = profile?.role === 'admin';
   const navItems = isAdmin ? adminNavItems : studentNavItems;
 
   return (
     <div className="hidden md:flex md:w-64 md:flex-col">
-      <div className="flex flex-col flex-grow pt-5 overflow-y-auto bg-white border-r border-gray-200">
+      <div className="flex flex-col flex-grow pt-5 overflow-y-auto bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700">
         <div className="flex items-center flex-shrink-0 px-4">
           <div className="flex items-center space-x-3">
-            <div className="w-8 h-8 bg-gradient-fitness rounded-lg flex items-center justify-center">
-              <span className="text-white font-bold text-sm">VT</span>
+            <div className="w-10 h-10 bg-red-600 rounded-lg flex items-center justify-center shadow-md">
+              <span className="text-white font-bold text-lg">VT</span>
             </div>
-            <h1 className="text-xl font-bold text-gray-900">VeigaTeam</h1>
+            <h1 className="text-xl font-bold text-gray-900 dark:text-white">VeigaTeam</h1>
           </div>
         </div>
         
@@ -60,16 +59,16 @@ export const Sidebar: React.FC = () => {
                   className={cn(
                     'group flex items-center px-2 py-2 text-sm font-medium rounded-md transition-colors',
                     isActive
-                      ? 'bg-emerald-100 text-emerald-700'
-                      : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
+                      ? 'bg-red-100 dark:bg-red-900/20 text-red-700 dark:text-red-300'
+                      : 'text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 hover:text-gray-900 dark:hover:text-white'
                   )}
                 >
                   <item.icon
                     className={cn(
                       'mr-3 h-5 w-5 flex-shrink-0',
                       isActive
-                        ? 'text-emerald-500'
-                        : 'text-gray-400 group-hover:text-gray-500'
+                        ? 'text-red-500 dark:text-red-400'
+                        : 'text-gray-400 dark:text-gray-500 group-hover:text-gray-500 dark:group-hover:text-gray-400'
                     )}
                   />
                   {item.label}
