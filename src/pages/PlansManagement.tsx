@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -18,7 +17,10 @@ const PlansManagement: React.FC = () => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [editingPlan, setEditingPlan] = useState<any>(null);
 
-  const handleSavePlan = async (formData: FormData) => {
+  const handleSavePlan = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    
     try {
       const planData = {
         name: formData.get('name') as string,
@@ -120,7 +122,7 @@ const PlansManagement: React.FC = () => {
               </DialogDescription>
             </DialogHeader>
             
-            <form action={handleSavePlan} className="space-y-4">
+            <form onSubmit={handleSavePlan} className="space-y-4">
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <Label htmlFor="name">Nome do Plano</Label>

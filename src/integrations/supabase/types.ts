@@ -473,12 +473,23 @@ export type Database = {
     }
     Functions: {
       log_action: {
-        Args: {
-          p_action: string
-          p_entity_type: string
-          p_entity_id?: string
-          p_details?: Json
-        }
+        Args:
+          | Record<PropertyKey, never>
+          | {
+              p_action: string
+              p_entity_type: string
+              p_entity_id?: string
+              p_details?: Json
+            }
+          | {
+              p_user_id: string
+              p_action: string
+              p_entity_type: string
+              p_entity_id: string
+              p_details: Json
+              p_ip_address: unknown
+              p_user_agent: string
+            }
         Returns: undefined
       }
     }

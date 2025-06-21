@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -39,7 +38,7 @@ const SystemLogs: React.FC = () => {
     return <AlertCircle className="w-4 h-4" />;
   };
 
-  const formatLogDetails = (details: any) => {
+  const formatLogDetails = (details: any): string => {
     if (!details) return '-';
     if (typeof details === 'string') return details;
     return JSON.stringify(details, null, 2);

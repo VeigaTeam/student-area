@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -18,8 +17,11 @@ const ScheduleSettings: React.FC = () => {
   const updateSettings = useUpdateScheduleSettings();
   const updateApproval = useUpdateBookingApproval();
 
-  const handleSaveSettings = async (formData: FormData) => {
+  const handleSaveSettings = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     if (!settings) return;
+
+    const formData = new FormData(e.currentTarget);
 
     try {
       const updates = {
@@ -108,7 +110,7 @@ const ScheduleSettings: React.FC = () => {
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <form action={handleSaveSettings} className="space-y-6">
+              <form onSubmit={handleSaveSettings} className="space-y-6">
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-2">
                     <Label htmlFor="advance_booking_days">Dias de antecedência</Label>
