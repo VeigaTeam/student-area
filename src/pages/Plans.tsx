@@ -37,10 +37,10 @@ const Plans: React.FC = () => {
   return (
     <div className="space-y-6">
       <div className="text-center">
-        <h1 className="text-3xl font-bold text-gray-900">
+        <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100">
           {isAdmin ? 'Gerenciar Planos' : 'Escolha seu Plano'}
         </h1>
-        <p className="mt-4 text-lg text-gray-600">
+        <p className="mt-4 text-lg text-gray-600 dark:text-gray-300">
           {isAdmin 
             ? 'Configure os planos disponíveis para os alunos'
             : 'Encontre o plano perfeito para seus objetivos'
@@ -58,43 +58,43 @@ const Plans: React.FC = () => {
               onDelete={() => {}}
             />
           ) : (
-            <div key={plan.id} className="bg-white rounded-lg shadow-md p-6 border">
+            <div key={plan.id} className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 border dark:border-gray-700">
               {plan.popular && (
                 <div className="bg-red-600 text-white text-sm font-medium px-3 py-1 rounded-full inline-block mb-4">
                   Popular
                 </div>
               )}
-              <h3 className="text-xl font-bold text-gray-900 mb-2">{plan.name}</h3>
-              <p className="text-gray-600 mb-4">{plan.description}</p>
+              <h3 className="text-xl font-bold text-gray-900 dark:text-gray-100 mb-2">{plan.name}</h3>
+              <p className="text-gray-600 dark:text-gray-300 mb-4">{plan.description}</p>
               <div className="text-center mb-4">
                 <p className="text-3xl font-bold text-red-600">
                   R$ {plan.monthlyPrice.toFixed(2)}
                 </p>
-                <p className="text-sm text-gray-600">por mês</p>
+                <p className="text-sm text-gray-600 dark:text-gray-400">por mês</p>
               </div>
               <div className="mb-4">
-                <p className="font-medium mb-2">Modalidades:</p>
+                <p className="font-medium mb-2 text-gray-900 dark:text-gray-100">Modalidades:</p>
                 <div className="flex flex-wrap gap-1">
                   {plan.modalities.map((modality, index) => (
-                    <span key={index} className="px-2 py-1 bg-gray-100 text-gray-700 text-sm rounded">
+                    <span key={index} className="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-sm rounded">
                       {modality}
                     </span>
                   ))}
                 </div>
               </div>
               <div className="mb-4">
-                <p className="font-medium mb-2">Benefícios:</p>
+                <p className="font-medium mb-2 text-gray-900 dark:text-gray-100">Benefícios:</p>
                 <ul className="text-sm space-y-1">
                   {plan.features.map((feature, index) => (
-                    <li key={index} className="flex items-center">
+                    <li key={index} className="flex items-center text-gray-700 dark:text-gray-300">
                       <span className="w-1 h-1 bg-red-600 rounded-full mr-2"></span>
                       {feature}
                     </li>
                   ))}
                 </ul>
               </div>
-              <div className="pt-2 border-t mb-4">
-                <p className="text-sm text-gray-600">
+              <div className="pt-2 border-t dark:border-gray-700 mb-4">
+                <p className="text-sm text-gray-600 dark:text-gray-400">
                   {plan.weeklyClasses} aulas por semana
                 </p>
               </div>
@@ -111,11 +111,11 @@ const Plans: React.FC = () => {
       </div>
 
       {!isAdmin && (
-        <div className="text-center mt-8 p-6 bg-emerald-50 rounded-lg">
-          <h3 className="text-lg font-semibold text-emerald-800">
+        <div className="text-center mt-8 p-6 bg-emerald-50 dark:bg-gray-800 rounded-lg border dark:border-gray-700">
+          <h3 className="text-lg font-semibold text-emerald-800 dark:text-emerald-300">
             Precisa de ajuda para escolher?
           </h3>
-          <p className="mt-2 text-emerald-600">
+          <p className="mt-2 text-emerald-600 dark:text-emerald-400">
             Nossa equipe está pronta para te ajudar a encontrar o plano ideal para seus objetivos.
           </p>
           <Button className="mt-4 bg-gradient-fitness hover:bg-emerald-600">
