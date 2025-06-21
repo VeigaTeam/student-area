@@ -56,7 +56,7 @@ export const LogItem: React.FC<LogItemProps> = ({ log }) => {
             <p><strong>ID da Entidade:</strong> {log.entity_id}</p>
           )}
           {log.ip_address && (
-            <p><strong>IP:</strong> {log.ip_address}</p>
+            <p><strong>IP:</strong> {String(log.ip_address)}</p>
           )}
           {log.user_agent && (
             <p><strong>User Agent:</strong> {log.user_agent}</p>

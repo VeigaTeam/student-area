@@ -10,7 +10,7 @@ import {
   DropdownMenuSeparator,
 } from '@/components/ui/dropdown-menu';
 import { Badge } from '@/components/ui/badge';
-import { useNotifications, useMarkNotificationAsRead } from '@/hooks/useDatabase';
+import { useNotifications, useMarkNotificationAsRead } from '@/hooks/useNotifications';
 import { formatDistanceToNow } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 

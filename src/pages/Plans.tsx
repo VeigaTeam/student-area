@@ -4,8 +4,10 @@ import { Button } from '@/components/ui/button';
 import { PlanCard } from '@/components/Plans/PlanCard';
 import { mockPlans } from '@/data/mockData';
 import { useAuth } from '@/contexts/AuthContext';
-import { Plan } from '@/types';
+import { Tables } from '@/integrations/supabase/types';
 import { toast } from '@/hooks/use-toast';
+
+type Plan = Tables<'plans'>;
 
 const Plans: React.FC = () => {
   const { user } = useAuth();
