@@ -18,10 +18,8 @@ const Plans: React.FC = () => {
     });
   };
 
-  // Convert mock plan to match expected interface for PlanCard when admin
+  // Convert mock plan to match expected interface for PlanCard
   const convertPlanForCard = (plan: Plan) => {
-    if (!isAdmin) return plan;
-    
     return {
       id: plan.id,
       name: plan.name,
