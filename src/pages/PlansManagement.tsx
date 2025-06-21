@@ -8,7 +8,7 @@ import { Switch } from '@/components/ui/switch';
 import { Badge } from '@/components/ui/badge';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { FileText, Plus, Edit, Trash2, Star } from 'lucide-react';
-import { usePlans } from '@/hooks/useDatabase';
+import { usePlans } from '@/hooks/usePlans';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from '@/hooks/use-toast';
 
