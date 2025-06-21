@@ -13,6 +13,7 @@ import Dashboard from '@/pages/Dashboard';
 import Auth from '@/pages/Auth';
 import Students from '@/pages/Students';
 import Schedule from '@/pages/Schedule';
+import MySchedule from '@/pages/MySchedule';
 import Plans from '@/pages/Plans';
 import Financial from '@/pages/Financial';
 import Settings from '@/pages/Settings';
@@ -48,6 +49,7 @@ function App() {
                       <Route path="/" element={<Dashboard />} />
                       <Route path="/students" element={<Students />} />
                       <Route path="/schedule" element={<Schedule />} />
+                      <Route path="/my-schedule" element={<MySchedule />} />
                       <Route path="/schedule-settings" element={<ScheduleSettings />} />
                       <Route path="/plans" element={<Plans />} />
                       <Route path="/plans-management" element={<PlansManagement />} />

@@ -67,7 +67,7 @@ export const LogItem: React.FC<LogItemProps> = ({ log }) => {
                 Ver detalhes
               </summary>
               <pre className="mt-2 p-2 bg-gray-100 rounded text-xs overflow-auto">
-                {String(formatLogDetails(log.details))}
+                {formatLogDetails(log.details)}
               </pre>
             </details>
           )}
