@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -183,7 +184,7 @@ const SystemLogs: React.FC = () => {
                             Ver detalhes
                           </summary>
                           <pre className="mt-2 p-2 bg-gray-100 rounded text-xs overflow-auto">
-                            {formatLogDetails(log.details)}
+                            {String(formatLogDetails(log.details))}
                           </pre>
                         </details>
                       )}
