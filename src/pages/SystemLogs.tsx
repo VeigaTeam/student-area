@@ -35,19 +35,19 @@ const SystemLogs: React.FC = () => {
 
   if (isLoading) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
+      <div className="flex items-center justify-center min-h-screen bg-white dark:bg-gray-900">
         <div className="text-center">
           <div className="w-16 h-16 bg-red-600 rounded-xl flex items-center justify-center mb-4 mx-auto animate-pulse">
             <span className="text-white font-bold text-xl">VT</span>
           </div>
-          <p className="text-muted-foreground">Carregando logs...</p>
+          <p className="text-gray-600 dark:text-gray-400">Carregando logs...</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 bg-white dark:bg-gray-900 min-h-full">
       <LogsHeader onExport={handleExport} />
 
       <LogFilters
@@ -57,10 +57,10 @@ const SystemLogs: React.FC = () => {
         setFilter={setFilter}
       />
 
-      <Card>
+      <Card className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
         <CardHeader>
-          <CardTitle>Atividades Recentes</CardTitle>
-          <CardDescription>
+          <CardTitle className="text-gray-900 dark:text-gray-100">Atividades Recentes</CardTitle>
+          <CardDescription className="text-gray-600 dark:text-gray-400">
             {totalCount ? `${totalCount} registros encontrados` : 'Carregando...'}
           </CardDescription>
         </CardHeader>
@@ -79,9 +79,9 @@ const SystemLogs: React.FC = () => {
             </div>
           ) : (
             <div className="text-center py-8">
-              <AlertCircle className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-              <p className="text-gray-500">Nenhum log encontrado</p>
-              <p className="text-sm text-gray-400">
+              <AlertCircle className="w-12 h-12 text-gray-400 dark:text-gray-500 mx-auto mb-4" />
+              <p className="text-gray-500 dark:text-gray-400">Nenhum log encontrado</p>
+              <p className="text-sm text-gray-400 dark:text-gray-500">
                 {search || filter !== 'all' ? 'Tente ajustar os filtros' : 'Os logs aparecerão aqui conforme o sistema for usado'}
               </p>
             </div>

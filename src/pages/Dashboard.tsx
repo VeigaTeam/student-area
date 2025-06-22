@@ -8,7 +8,11 @@ const Dashboard: React.FC = () => {
   
   const userName = user?.user_metadata?.full_name || user?.email?.split('@')[0] || 'Usuário';
 
-  return <UserRoleHandler userName={userName} />;
+  return (
+    <div className="min-h-full bg-white dark:bg-gray-900">
+      <UserRoleHandler userName={userName} />
+    </div>
+  );
 };
 
 export default Dashboard;

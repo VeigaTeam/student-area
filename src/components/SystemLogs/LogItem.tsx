@@ -14,15 +14,15 @@ interface LogItemProps {
 
 export const LogItem: React.FC<LogItemProps> = ({ log }) => {
   const getActionColor = (action: string) => {
-    if (action.includes('create') || action.includes('signup')) return 'bg-green-100 text-green-800';
-    if (action.includes('update') || action.includes('edit')) return 'bg-blue-100 text-blue-800';
-    if (action.includes('delete') || action.includes('remove')) return 'bg-red-100 text-red-800';
-    if (action.includes('login') || action.includes('auth')) return 'bg-purple-100 text-purple-800';
-    return 'bg-gray-100 text-gray-800';
+    if (action.includes('create') || action.includes('signup')) return 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300';
+    if (action.includes('update') || action.includes('edit')) return 'bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-300';
+    if (action.includes('delete') || action.includes('remove')) return 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300';
+    if (action.includes('login') || action.includes('auth')) return 'bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-300';
+    return 'bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-300';
   };
 
   const getEntityIcon = (entityType: string) => {
-    return <AlertCircle className="w-4 h-4" />;
+    return <AlertCircle className="w-4 h-4 text-gray-600 dark:text-gray-400" />;
   };
 
   const formatLogDetails = (details: any): string => {
@@ -32,7 +32,7 @@ export const LogItem: React.FC<LogItemProps> = ({ log }) => {
   };
 
   return (
-    <div className="flex items-start space-x-4 p-4 border rounded-lg hover:bg-gray-50">
+    <div className="flex items-start space-x-4 p-4 border border-gray-200 dark:border-gray-700 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 bg-white dark:bg-gray-900">
       <div className="flex-shrink-0">
         {getEntityIcon(log.entity_type)}
       </div>
@@ -42,31 +42,31 @@ export const LogItem: React.FC<LogItemProps> = ({ log }) => {
           <Badge className={getActionColor(log.action)}>
             {log.action}
           </Badge>
-          <Badge variant="outline">
+          <Badge variant="outline" className="border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300">
             {log.entity_type}
           </Badge>
-          <span className="text-xs text-gray-500">
+          <span className="text-xs text-gray-500 dark:text-gray-400">
             {format(new Date(log.created_at || ''), 'dd/MM/yyyy HH:mm:ss', { locale: ptBR })}
           </span>
         </div>
         
         <div className="text-sm space-y-1">
-          <p><strong>Usuário:</strong> {log.user_id || 'Sistema'}</p>
+          <p className="text-gray-900 dark:text-gray-100"><strong>Usuário:</strong> <span className="text-gray-700 dark:text-gray-300">{log.user_id || 'Sistema'}</span></p>
           {log.entity_id && (
-            <p><strong>ID da Entidade:</strong> {log.entity_id}</p>
+            <p className="text-gray-900 dark:text-gray-100"><strong>ID da Entidade:</strong> <span className="text-gray-700 dark:text-gray-300">{log.entity_id}</span></p>
           )}
           {log.ip_address && (
-            <p><strong>IP:</strong> {String(log.ip_address)}</p>
+            <p className="text-gray-900 dark:text-gray-100"><strong>IP:</strong> <span className="text-gray-700 dark:text-gray-300">{String(log.ip_address)}</span></p>
           )}
           {log.user_agent && (
-            <p><strong>User Agent:</strong> {log.user_agent}</p>
+            <p className="text-gray-900 dark:text-gray-100"><strong>User Agent:</strong> <span className="text-gray-700 dark:text-gray-300">{log.user_agent}</span></p>
           )}
           {log.details && (
             <details className="mt-2">
-              <summary className="cursor-pointer text-blue-600 hover:text-blue-800">
+              <summary className="cursor-pointer text-red-600 dark:text-red-400 hover:text-red-800 dark:hover:text-red-300">
                 Ver detalhes
               </summary>
-              <pre className="mt-2 p-2 bg-gray-100 rounded text-xs overflow-auto">
+              <pre className="mt-2 p-2 bg-gray-100 dark:bg-gray-800 rounded text-xs overflow-auto text-gray-900 dark:text-gray-100">
                 {formatLogDetails(log.details)}
               </pre>
             </details>

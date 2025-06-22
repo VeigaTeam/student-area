@@ -39,8 +39,8 @@ const Students: React.FC = () => {
     <div className="space-y-6">
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Gestão de Alunos</h1>
-          <p className="mt-1 text-sm text-gray-600">
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">Gestão de Alunos</h1>
+          <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">
             Gerencie todos os alunos da academia
           </p>
         </div>
