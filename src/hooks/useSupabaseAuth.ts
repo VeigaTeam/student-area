@@ -54,19 +54,24 @@ export const useSupabaseAuth = () => {
     console.log('Tentando cadastrar usuário:', { email, name });
     const redirectUrl = `${window.location.origin}/`;
     
-    const { data, error } = await supabase.auth.signUp({
-      email,
-      password,
-      options: {
-        emailRedirectTo: redirectUrl,
-        data: {
-          full_name: name,
+    try {
+      const { data, error } = await supabase.auth.signUp({
+        email,
+        password,
+        options: {
+          emailRedirectTo: redirectUrl,
+          data: {
+            full_name: name,
+          }
         }
-      }
-    });
+      });
 
-    console.log('Resultado do cadastro:', { data: !!data, error });
-    return { data, error };
+      console.log('Resultado do cadastro:', { data: !!data, error });
+      return { data, error };
+    } catch (err) {
+      console.error('Erro crítico no cadastro:', err);
+      return { data: null, error: err };
+    }
   };
 
   const signIn = async (email: string, password: string) => {
@@ -98,9 +103,25 @@ export const useSupabaseAuth = () => {
 
   const signOut = async () => {
     console.log('Fazendo logout...');
-    const { error } = await supabase.auth.signOut();
-    console.log('Resultado do logout:', { error });
-    return { error };
+    
+    try {
+      const { error } = await supabase.auth.signOut();
+      console.log('Resultado do logout:', { error });
+      
+      // Forçar limpeza do estado local imediatamente
+      if (!error) {
+        setAuthState({
+          user: null,
+          session: null,
+          loading: false,
+        });
+      }
+      
+      return { error };
+    } catch (err) {
+      console.error('Erro crítico no logout:', err);
+      return { error: err };
+    }
   };
 
   return {

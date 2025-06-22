@@ -1,21 +1,31 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { useSupabaseAuth } from '@/hooks/useSupabaseAuth';
+import { useAuth } from '@/contexts/AuthContext';
 import { toast } from '@/hooks/use-toast';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 
 export const Auth: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
   const [loading, setLoading] = useState(false);
-  const { user, signIn, signUp } = useSupabaseAuth();
+  const { user, signIn, signUp } = useAuth();
+  const navigate = useNavigate();
 
+  useEffect(() => {
+    console.log('Auth - Estado do usuário:', { user: !!user });
+    if (user) {
+      console.log('Auth - Usuário autenticado, redirecionando para dashboard');
+      navigate('/', { replace: true });
+    }
+  }, [user, navigate]);
+
+  // Se já estiver autenticado, redirecionar
   if (user) {
     return <Navigate to="/" replace />;
   }
@@ -26,46 +36,73 @@ export const Auth: React.FC = () => {
 
     console.log('Tentando fazer login com:', { email });
 
-    const { error } = await signIn(email, password);
-    
-    if (error) {
-      console.error('Erro no login:', error);
+    try {
+      const { error } = await signIn(email, password);
+      
+      if (error) {
+        console.error('Erro no login:', error);
+        toast({
+          title: "Erro no login",
+          description: error.message || "Email ou senha incorretos.",
+          variant: "destructive",
+        });
+      } else {
+        console.log('Login realizado com sucesso');
+        toast({
+          title: "Login realizado com sucesso!",
+          description: "Bem-vindo ao VeigaTeam",
+        });
+        // O redirecionamento será feito pelo useEffect quando o user state mudar
+      }
+    } catch (err) {
+      console.error('Erro crítico no login:', err);
       toast({
         title: "Erro no login",
-        description: error.message,
+        description: "Ocorreu um erro inesperado. Tente novamente.",
         variant: "destructive",
       });
-    } else {
-      console.log('Login realizado com sucesso');
-      toast({
-        title: "Login realizado com sucesso!",
-        description: "Bem-vindo ao VeigaTeam",
-      });
+    } finally {
+      setLoading(false);
     }
-    
-    setLoading(false);
   };
 
   const handleSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
 
-    const { error } = await signUp(email, password, name);
-    
-    if (error) {
+    console.log('Tentando cadastrar usuário:', { email, name });
+
+    try {
+      const { error } = await signUp(email, password, name);
+      
+      if (error) {
+        console.error('Erro no cadastro:', error);
+        toast({
+          title: "Erro no cadastro",
+          description: error.message,
+          variant: "destructive",
+        });
+      } else {
+        console.log('Cadastro realizado com sucesso');
+        toast({
+          title: "Cadastro realizado!",
+          description: "Verifique seu email para confirmar a conta.",
+        });
+        // Limpar os campos após cadastro bem-sucedido
+        setEmail('');
+        setPassword('');
+        setName('');
+      }
+    } catch (err) {
+      console.error('Erro crítico no cadastro:', err);
       toast({
         title: "Erro no cadastro",
-        description: error.message,
+        description: "Ocorreu um erro inesperado. Tente novamente.",
         variant: "destructive",
       });
-    } else {
-      toast({
-        title: "Cadastro realizado!",
-        description: "Verifique seu email para confirmar a conta.",
-      });
+    } finally {
+      setLoading(false);
     }
-    
-    setLoading(false);
   };
 
   return (
@@ -139,6 +176,14 @@ export const Auth: React.FC = () => {
                     {loading ? 'Entrando...' : 'Entrar'}
                   </Button>
                 </form>
+
+                <div className="mt-6 text-center">
+                  <p className="text-sm text-gray-500 dark:text-gray-400 mb-2">Credenciais de teste:</p>
+                  <div className="text-xs bg-gray-50 dark:bg-gray-700 p-3 rounded-md">
+                    <p className="dark:text-gray-300"><strong>Admin:</strong> admin@veigateam.com / 123456</p>
+                    <p className="dark:text-gray-300"><strong>Aluno:</strong> joao@email.com / 123456</p>
+                  </div>
+                </div>
               </TabsContent>
               
               <TabsContent value="signup">

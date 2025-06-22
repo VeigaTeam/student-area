@@ -16,23 +16,42 @@ import { Input } from '@/components/ui/input';
 import { NotificationCenter } from '@/components/Notifications/NotificationCenter';
 import { ThemeToggle } from '@/components/ThemeToggle';
 import { toast } from '@/hooks/use-toast';
+import { useNavigate } from 'react-router-dom';
 
 export const Header: React.FC = () => {
   const { user, signOut } = useAuth();
   const { data: profile } = useProfile();
+  const navigate = useNavigate();
 
   const handleLogout = async () => {
-    const { error } = await signOut();
-    if (error) {
+    console.log('Iniciando processo de logout...');
+    
+    try {
+      const { error } = await signOut();
+      
+      if (error) {
+        console.error('Erro no logout:', error);
+        toast({
+          title: "Erro",
+          description: "Erro ao fazer logout",
+          variant: "destructive",
+        });
+      } else {
+        console.log('Logout realizado com sucesso, redirecionando...');
+        toast({
+          title: "Logout realizado",
+          description: "Você foi desconectado com sucesso",
+        });
+        
+        // Forçar redirecionamento para a página de login
+        navigate('/auth', { replace: true });
+      }
+    } catch (err) {
+      console.error('Erro crítico no logout:', err);
       toast({
         title: "Erro",
-        description: "Erro ao fazer logout",
+        description: "Ocorreu um erro inesperado durante o logout",
         variant: "destructive",
-      });
-    } else {
-      toast({
-        title: "Logout realizado",
-        description: "Você foi desconectado com sucesso",
       });
     }
   };
@@ -82,16 +101,25 @@ export const Header: React.FC = () => {
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className="w-56 bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
-                <DropdownMenuItem className="dark:text-gray-200 dark:hover:bg-gray-700">
+                <DropdownMenuItem 
+                  onClick={() => navigate('/profile')}
+                  className="dark:text-gray-200 dark:hover:bg-gray-700 cursor-pointer"
+                >
                   <User className="mr-2 h-4 w-4" />
                   <span>Perfil</span>
                 </DropdownMenuItem>
-                <DropdownMenuItem className="dark:text-gray-200 dark:hover:bg-gray-700">
+                <DropdownMenuItem 
+                  onClick={() => navigate('/settings')}
+                  className="dark:text-gray-200 dark:hover:bg-gray-700 cursor-pointer"
+                >
                   <Settings className="mr-2 h-4 w-4" />
                   <span>Configurações</span>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator className="dark:border-gray-700" />
-                <DropdownMenuItem onClick={handleLogout} className="text-red-600 dark:text-red-400 dark:hover:bg-gray-700">
+                <DropdownMenuItem 
+                  onClick={handleLogout} 
+                  className="text-red-600 dark:text-red-400 dark:hover:bg-gray-700 cursor-pointer"
+                >
                   <span>Sair</span>
                 </DropdownMenuItem>
               </DropdownMenuContent>

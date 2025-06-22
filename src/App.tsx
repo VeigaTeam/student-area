@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { AuthProvider } from '@/contexts/AuthContext';
 import { ThemeProvider } from '@/contexts/ThemeContext';
 import { Layout } from '@/components/Layout/Layout';
+import { ProtectedRoute } from '@/components/Auth/ProtectedRoute';
 import { Toaster } from '@/components/ui/toaster';
 
 // Pages
@@ -44,22 +45,24 @@ function App() {
               <Routes>
                 <Route path="/auth" element={<Auth />} />
                 <Route path="/*" element={
-                  <Layout>
-                    <Routes>
-                      <Route path="/" element={<Dashboard />} />
-                      <Route path="/students" element={<Students />} />
-                      <Route path="/schedule" element={<Schedule />} />
-                      <Route path="/my-schedule" element={<MySchedule />} />
-                      <Route path="/schedule-settings" element={<ScheduleSettings />} />
-                      <Route path="/plans" element={<Plans />} />
-                      <Route path="/plans-management" element={<PlansManagement />} />
-                      <Route path="/financial" element={<Financial />} />
-                      <Route path="/settings" element={<Settings />} />
-                      <Route path="/system-logs" element={<SystemLogs />} />
-                      <Route path="/profile" element={<Profile />} />
-                      <Route path="*" element={<NotFound />} />
-                    </Routes>
-                  </Layout>
+                  <ProtectedRoute>
+                    <Layout>
+                      <Routes>
+                        <Route path="/" element={<Dashboard />} />
+                        <Route path="/students" element={<Students />} />
+                        <Route path="/schedule" element={<Schedule />} />
+                        <Route path="/my-schedule" element={<MySchedule />} />
+                        <Route path="/schedule-settings" element={<ScheduleSettings />} />
+                        <Route path="/plans" element={<Plans />} />
+                        <Route path="/plans-management" element={<PlansManagement />} />
+                        <Route path="/financial" element={<Financial />} />
+                        <Route path="/settings" element={<Settings />} />
+                        <Route path="/system-logs" element={<SystemLogs />} />
+                        <Route path="/profile" element={<Profile />} />
+                        <Route path="*" element={<NotFound />} />
+                      </Routes>
+                    </Layout>
+                  </ProtectedRoute>
                 } />
               </Routes>
             </div>
