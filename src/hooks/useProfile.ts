@@ -1,4 +1,3 @@
-
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
@@ -27,16 +26,20 @@ export const useProfile = () => {
       
       console.log('Carregando perfil para usuário:', user.id);
       
-      const { data, error } = await supabase
-        .from('profiles')
-        .select('*')
-        .eq('id', user.id)
-        .single();
-      
-      if (error) {
-        console.error('Erro ao carregar perfil:', error);
+      try {
+        const { data, error } = await supabase
+          .from('profiles')
+          .select('*')
+          .eq('id', user.id)
+          .maybeSingle();
+        
+        if (error) {
+          console.error('Erro ao carregar perfil:', error);
+          throw error;
+        }
+        
         // Se o perfil não existe, vamos criá-lo
-        if (error.code === 'PGRST116') {
+        if (!data) {
           console.log('Perfil não encontrado, criando novo perfil...');
           const newProfile = {
             id: user.id,
@@ -61,15 +64,18 @@ export const useProfile = () => {
           console.log('Perfil criado com sucesso:', createdProfile);
           return createdProfile as Profile;
         }
-        throw error;
+        
+        console.log('Perfil carregado com sucesso:', data);
+        return data as Profile;
+      } catch (err) {
+        console.error('Erro no useProfile:', err);
+        throw err;
       }
-      
-      console.log('Perfil carregado com sucesso:', data);
-      return data as Profile;
     },
     enabled: !!user,
-    retry: 1,
+    retry: 2,
     staleTime: 1000 * 60 * 5, // 5 minutos
+    refetchOnWindowFocus: false,
   });
 };
 

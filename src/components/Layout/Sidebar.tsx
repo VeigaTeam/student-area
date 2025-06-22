@@ -15,6 +15,7 @@ import {
   AlertCircle
 } from 'lucide-react';
 import { useProfile } from '@/hooks/useProfile';
+import { useAuth } from '@/contexts/AuthContext';
 
 const adminNavItems = [
   { href: '/', icon: LayoutDashboard, label: 'Dashboard' },
@@ -25,6 +26,7 @@ const adminNavItems = [
   { href: '/plans-management', icon: ClipboardList, label: 'Gerenciar Planos' },
   { href: '/financial', icon: DollarSign, label: 'Financeiro' },
   { href: '/system-logs', icon: AlertCircle, label: 'Logs do Sistema' },
+  { href: '/profile', icon: User, label: 'Perfil' },
   { href: '/settings', icon: Settings, label: 'Configurações' },
 ];
 
@@ -33,14 +35,25 @@ const studentNavItems = [
   { href: '/my-schedule', icon: Calendar, label: 'Minhas Aulas' },
   { href: '/plans', icon: FileText, label: 'Planos' },
   { href: '/profile', icon: User, label: 'Perfil' },
+  { href: '/settings', icon: Settings, label: 'Configurações' },
 ];
 
 export const Sidebar: React.FC = () => {
   const location = useLocation();
-  const { data: profile } = useProfile();
+  const { user } = useAuth();
+  const { data: profile, isLoading } = useProfile();
   
-  const isAdmin = profile?.role === 'admin';
+  // Determinar se é admin baseado no perfil ou email como fallback
+  const isAdmin = profile?.role === 'admin' || user?.email === 'admin@veigateam.com';
   const navItems = isAdmin ? adminNavItems : studentNavItems;
+
+  console.log('Sidebar - Estado:', { 
+    user: !!user, 
+    profile, 
+    isAdmin, 
+    isLoading,
+    navItemsCount: navItems.length 
+  });
 
   return (
     <div className="hidden md:flex md:w-64 md:flex-col">
@@ -82,6 +95,12 @@ export const Sidebar: React.FC = () => {
               );
             })}
           </nav>
+          
+          {isLoading && (
+            <div className="px-2 py-2 text-sm text-gray-500 dark:text-gray-400">
+              Carregando menu...
+            </div>
+          )}
         </div>
       </div>
     </div>

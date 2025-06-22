@@ -57,7 +57,7 @@ export const Header: React.FC = () => {
   };
 
   const userName = profile?.full_name || user?.user_metadata?.full_name || user?.email?.split('@')[0] || 'Usuário';
-  const userRole = profile?.role || 'student';
+  const userRole = profile?.role || (user?.email === 'admin@veigateam.com' ? 'admin' : 'student');
 
   return (
     <header className="bg-white dark:bg-gray-800 shadow-sm border-b border-gray-200 dark:border-gray-700">
