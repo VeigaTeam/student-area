@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { StudentsTable } from '@/components/Students/StudentsTable';
+import { AddStudentDialog } from '@/components/Students/AddStudentDialog';
 import { Plus } from 'lucide-react';
 import { mockStudents } from '@/data/mockData';
 import { Student } from '@/types';
@@ -9,6 +10,7 @@ import { toast } from '@/hooks/use-toast';
 
 const Students: React.FC = () => {
   const [students, setStudents] = useState<Student[]>(mockStudents);
+  const [showAddDialog, setShowAddDialog] = useState(false);
 
   const handleEdit = (student: Student) => {
     toast({
@@ -28,13 +30,6 @@ const Students: React.FC = () => {
     }
   };
 
-  const handleAddStudent = () => {
-    toast({
-      title: "Novo Aluno",
-      description: "Funcionalidade de cadastro em desenvolvimento.",
-    });
-  };
-
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
@@ -44,7 +39,7 @@ const Students: React.FC = () => {
             Gerencie todos os alunos da academia
           </p>
         </div>
-        <Button onClick={handleAddStudent} className="bg-gradient-fitness hover:bg-emerald-600">
+        <Button onClick={() => setShowAddDialog(true)} className="bg-gradient-fitness hover:bg-emerald-600">
           <Plus className="mr-2 h-4 w-4" />
           Novo Aluno
         </Button>
@@ -54,6 +49,11 @@ const Students: React.FC = () => {
         students={students}
         onEdit={handleEdit}
         onDelete={handleDelete}
+      />
+
+      <AddStudentDialog 
+        open={showAddDialog} 
+        onOpenChange={setShowAddDialog}
       />
     </div>
   );

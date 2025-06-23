@@ -12,7 +12,9 @@ import {
   User,
   CalendarCheck,
   ClipboardList,
-  AlertCircle
+  AlertCircle,
+  UserCog,
+  UserPlus
 } from 'lucide-react';
 import { useProfile } from '@/hooks/useProfile';
 import { useAuth } from '@/contexts/AuthContext';
@@ -20,9 +22,9 @@ import { useAuth } from '@/contexts/AuthContext';
 const adminNavItems = [
   { href: '/', icon: LayoutDashboard, label: 'Dashboard' },
   { href: '/students', icon: Users, label: 'Alunos' },
-  { href: '/schedule', icon: Calendar, label: 'Agendamentos' },
+  { href: '/schedule', icon: Calendar, label: 'Gerenciar Agendamentos' },
   { href: '/schedule-settings', icon: CalendarCheck, label: 'Config. Agendamentos' },
-  { href: '/plans', icon: FileText, label: 'Planos' },
+  { href: '/user-management', icon: UserCog, label: 'Gerenciar Usuários' },
   { href: '/plans-management', icon: ClipboardList, label: 'Gerenciar Planos' },
   { href: '/financial', icon: DollarSign, label: 'Financeiro' },
   { href: '/system-logs', icon: AlertCircle, label: 'Logs do Sistema' },
